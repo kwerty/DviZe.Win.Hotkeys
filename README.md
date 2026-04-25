@@ -1,6 +1,6 @@
 # DviZe.Win.Hotkeys
 
-A .NET 10 library for registering global hotkeys in console and non-UI applications.
+A .NET 10 class library for registering global hotkeys in console and non-UI applications.
 
 Designed to work alongside `MessagePump` and `HiddenWindow` from [DviZe.Win.Common](https://github.com/kwerty/DviZe.Win.Common), which provide the Win32 message loop and window handle needed to receive hotkey events.
 
