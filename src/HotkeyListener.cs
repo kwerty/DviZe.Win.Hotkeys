@@ -27,9 +27,29 @@ public sealed class HotkeyListener : IAsyncDisposable
         subscriptionRunner = new Runner<HotkeyListenerSubscription>(loggerFactory);
     }
 
+    /// <summary>
+    /// Subscribes to hotkey events.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="HotkeyListener"/> will become permanently faulted if the <see cref="HiddenWindow"/> passed to the constructor
+    /// is not installed when this method is first called.
+    /// </remarks>
+    /// <returns>An <see cref="IDisposable"/> which should be disposed to unsubscribe.</returns>
+    /// <exception cref="InvalidOperationException" />
+    /// <exception cref="ObjectDisposedException" />
     public Task<IDisposable> SubscribeAsync(Key key, Action<Hotkey> callback, CancellationToken cancellationToken = default)
         => SubscribeAsyncCore(new Hotkey(HotkeyModifiers.None, key), callback, cancellationToken);
 
+    /// <summary>
+    /// Subscribes to hotkey events.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="HotkeyListener"/> will become permanently faulted if the <see cref="HiddenWindow"/> passed to the constructor
+    /// is not installed when this method is first called.
+    /// </remarks>
+    /// <returns>An <see cref="IDisposable"/> which should be disposed to unsubscribe.</returns>
+    /// <exception cref="InvalidOperationException" />
+    /// <exception cref="ObjectDisposedException" />
     public Task<IDisposable> SubscribeAsync(HotkeyModifiers modifiers, Key key, Action<Hotkey> callback, CancellationToken cancellationToken = default)
         => SubscribeAsyncCore(new Hotkey(modifiers, key), callback, cancellationToken);
 
