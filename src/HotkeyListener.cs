@@ -23,17 +23,13 @@ public sealed class HotkeyListener : IAsyncDisposable
         this.hiddenWindow = hiddenWindow;
         this.threadAccessor = threadAccessor;
         this.loggerFactory = loggerFactory;
-        sessionOnDemand = new OnDemand<HotkeyListenerSession>(() => new(hiddenWindow), loggerFactory);
+        sessionOnDemand = new OnDemand<HotkeyListenerSession>(new OnDemandOptions { CanRetry = true }, () => new(hiddenWindow), loggerFactory);
         subscriptionRunner = new Runner<HotkeyListenerSubscription>(loggerFactory);
     }
 
     /// <summary>
     /// Subscribes to hotkey events.
     /// </summary>
-    /// <remarks>
-    /// <see cref="HotkeyListener"/> will become permanently faulted if the <see cref="HiddenWindow"/> passed to the constructor
-    /// is not installed when this method is first called.
-    /// </remarks>
     /// <returns>An <see cref="IDisposable"/> which should be disposed to unsubscribe.</returns>
     /// <exception cref="InvalidOperationException" />
     /// <exception cref="ObjectDisposedException" />
@@ -43,10 +39,6 @@ public sealed class HotkeyListener : IAsyncDisposable
     /// <summary>
     /// Subscribes to hotkey events.
     /// </summary>
-    /// <remarks>
-    /// <see cref="HotkeyListener"/> will become permanently faulted if the <see cref="HiddenWindow"/> passed to the constructor
-    /// is not installed when this method is first called.
-    /// </remarks>
     /// <returns>An <see cref="IDisposable"/> which should be disposed to unsubscribe.</returns>
     /// <exception cref="InvalidOperationException" />
     /// <exception cref="ObjectDisposedException" />
