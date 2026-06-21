@@ -21,8 +21,7 @@ public class Program
         builder.Services.AddLogging(loggingBuilder =>
         {
             loggingBuilder
-                .SetMinimumLevel(LogLevel.None)
-                .AddFilter(typeof(Program).Namespace, LogLevel.Information)
+                .AddFilter("Microsoft.Hosting.Lifetime", LogLevel.None)
                 .AddSimpleConsole(opts => opts.SingleLine = true);
         });
 

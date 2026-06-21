@@ -29,8 +29,7 @@ internal sealed class HotkeyListenerSubscription(Hotkey hotkey, Action<Hotkey> c
                 if (!session.registrations.TryGetValue(hotkey, out registration))
                 {
                     registration = new Registration(nextHotkeyId++);
-                    session.registrations.Add(hotkey, registration);
-
+                    
                     logger.LogDebug("Registering Hotkey Id: {id}, Modifiers: {modifier}, Key: {key}.", registration.id, hotkey.Modifiers, hotkey.Key);
 
                     if (Win32.RegisterHotKey(hiddenWindow.Hwnd.Value, registration.id, (uint)hotkey.Modifiers, (uint)hotkey.Key) == 0)
@@ -42,6 +41,8 @@ internal sealed class HotkeyListenerSubscription(Hotkey hotkey, Action<Hotkey> c
 
                         throw Win32Exception.FromLastError(nameof(Win32.RegisterHotKey));
                     }
+
+                    session.registrations.Add(hotkey, registration);
                 }
 
                 registration.callbacks += callback;
