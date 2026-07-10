@@ -23,7 +23,7 @@ public sealed class HotkeyListener : IAsyncDisposable
         this.hiddenWindow = hiddenWindow;
         this.threadAccessor = threadAccessor;
         this.loggerFactory = loggerFactory;
-        sessionOnDemand = new OnDemand<HotkeyListenerSession>(new OnDemandOptions { CanRetry = true }, () => new(hiddenWindow), loggerFactory);
+        sessionOnDemand = new OnDemand<HotkeyListenerSession>(new OnDemandOptions { RetryPolicy = OnDemandRetryPolicy.RetryAfterWorkerFailedToStart }, () => new(hiddenWindow), loggerFactory);
         subscriptionRunner = new Runner<HotkeyListenerSubscription>(loggerFactory);
     }
 
