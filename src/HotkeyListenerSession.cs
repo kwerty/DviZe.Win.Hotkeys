@@ -1,6 +1,7 @@
 ﻿using Kwerty.DviZe.Workers;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kwerty.DviZe.Win.Hotkeys;
@@ -9,6 +10,8 @@ internal sealed class HotkeyListenerSession(HiddenWindow hiddenWindow) : Worker
 {
     readonly internal Dictionary<Hotkey, Registration> registrations = [];
     IDisposable hiddenWindowSubscription;
+
+    internal CancellationToken StoppingToken => Context.StoppingToken;
 
     protected override async Task OnStartingAsync(WorkerStartingContext startingContext)
     {

@@ -53,6 +53,9 @@ internal sealed class HotkeyListenerSubscription(Hotkey hotkey, Action<Hotkey> c
             sessionReleaser.Dispose();
             throw;
         }
+
+        startingContext.Complete();
+        session.StoppingToken.Register(() => Context.TryStop());
     }
 
     protected override async Task OnStoppingAsync()
